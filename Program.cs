@@ -40,7 +40,7 @@ using SerialDevice device = SerialDevice.FromIdAsync(myDevices[0].Id).GetResults
             Console.ReadKey();
             try
             {
-                SendDataToPort(comPort, "5a 3a 08 2b 00 01 01 ff 00 80 00"); // Sets all leds to #008000
+                SendDataToPort(comPort, "5a 3a 20 2b 00 01 01 ff ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff 80 00 ff ff ff 00 ff 8c 00 bf ff ff ff ff"); // Sets the 7 segments to Red, Green, Blue, Orange, Purple, Yellow, White
             }
             catch (Exception ex)
             {
