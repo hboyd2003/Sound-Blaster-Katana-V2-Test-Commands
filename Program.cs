@@ -4,32 +4,45 @@ using (SerialPort comPort = new SerialPort("COM3", 9600)) // Baudrate is unknown
 {
     try
     {
-        comPort.Open();
+        try {
+            comPort.Open();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Could not open COM3");
+            Console.WriteLine(ex.Message);
+            Console.WriteLine("Press any key to close...");
+            Console.ReadKey();
+            comPort.Close();
+        }
         Console.WriteLine("Successfully connected to COM3!");
 
         Console.WriteLine("Press any key to send the first command...");
         Console.ReadKey();
-
-        SendDataToPort(comPort, "5a 3a 08 2b 00 01 01 ff 00 80 00"); // Should set all leds to #008000
-
-        Console.WriteLine("\nDid the RGB LEDs change? (y/n)");
+        try
+        {
+            SendDataToPort(comPort, "5a 3a 08 2b 00 01 01 ff 00 80 00"); // Should set all leds to #008000
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Could not send first command");
+            Console.WriteLine(ex.Message);
+            Console.WriteLine("Press any key to close...");
+            Console.ReadKey();
+            comPort.Close();
+            return;
+        }
+        
+        Console.WriteLine("\nDid the RGB LEDs change? possible answers: (y/n)");
         char response = Console.ReadKey().KeyChar;
-
-        if (response == 'n' || response == 'N')
-        {
-            SendDataToPort(comPort, "08 2b 00 01 01 ff 00 80 00"); // Serial communication was captured using a general USB capture program (serial header?)
-            Console.WriteLine("\nSecond command sent. Check the LEDs again.");
-        }
-        else
-        {
-            Console.WriteLine("\nClosing program...");
-        }
+        Console.WriteLine("\nClosing program...");
 
         comPort.Close();
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error: {ex.Message}");
+        Console.WriteLine($"General Error: {ex.Message}");
+        Console.WriteLine("Press any key to close...");
     }
 }
 
