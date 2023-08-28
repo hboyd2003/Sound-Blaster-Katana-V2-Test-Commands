@@ -34,6 +34,7 @@ using (SerialPort comPort = new SerialPort(device.PortName, 9600)) // Baudrate i
             Console.WriteLine("Press any key to close...");
             Console.ReadKey();
             comPort.Close();
+            return;
         }
         Console.WriteLine("Successfully connected to " + device.PortName + "!");
 
