@@ -1,8 +1,8 @@
 ﻿using System.IO.Ports;
 using Windows.Devices.SerialCommunication;
 
-ushort vid = 0x045E;
-ushort pid = 0x078F;
+ushort vid = 0x041E;
+ushort pid = 0x3260;
 
 string aqs = SerialDevice.GetDeviceSelectorFromUsbVidPid(vid, pid);
 
@@ -16,7 +16,7 @@ if (myDevices.Count == 0)
 }
 
 
-using SerialDevice device = SerialDevice.FromIdAsync(myDevices[0].Id).GetResults();
+using SerialDevice device = await SerialDevice.FromIdAsync(myDevices[0].Id).GetResults();
 {
     using (SerialPort comPort = new SerialPort(device.PortName, 9600)) // Baudrate is unknown
     {
